@@ -1,5 +1,7 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3000/api/notes";
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_API_URL || "http://localhost:3000/api/notes"
+    : "/api/notes";
 
 export class ApiError extends Error {
   constructor(message, status, data = {}) {

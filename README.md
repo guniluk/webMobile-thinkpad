@@ -222,6 +222,27 @@ webMobile-thinkpad/
 
 ---
 
+### 4) Render 풀스택(Fullstack) 배포 설정
+
+Render Web Service를 통해 프론트엔드와 백엔드를 단일 서비스로 배포할 수 있습니다.
+
+1. **Render 대시보드에서 `New Web Service` 생성**
+   - GitHub 저장소 연결
+2. **배포 설정 입력:**
+   - **Environment**: `Node`
+   - **Build Command**: `npm run build` (루트 `package.json`에서 백엔드/프론트엔드 의존성 설치 및 프론트 빌드 자동 수행)
+   - **Start Command**: `npm start` (또는 `node backend/src/server.js`)
+3. **환경 변수(Environment Variables) 등록:**
+   - `NODE_ENV` = `production`
+   - `MONGO_URI` = `mongodb+srv://...`
+   - `UPSTASH_REDIS_REST_URL` = `https://...`
+   - `UPSTASH_REDIS_REST_TOKEN` = `...`
+4. **배포 완료 및 14분 자동 헬스체크 (Keep-Alive):**
+   - 백엔드 Express가 정적 빌드 파일(`frontend/dist`)과 API(`/api/notes`)를 동시에 완벽하게 서빙합니다.
+   - Render Free Tier의 15분 비활성 슬립(Cold Start)을 방지하기 위해, 서버가 시작되면 14분마다 `/api/health`로 자동 핑(Self-Ping)을 보내 무중단 가동 상태를 유지합니다.
+
+---
+
 ## 💡 주요 작업 내용 및 핵심 구현 절차
 
 ### 1. daisyUI 5 멀티 테마 시스템 (`Light`, `Dark`, `Forest`)

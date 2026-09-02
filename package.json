@@ -1,0 +1,22 @@
+{
+  "name": "webmobile-thinkpad",
+  "version": "1.0.0",
+  "description": "> **ThinkPad**는 떠오르는 생각과 아이디어를 빠르고 아름답게 기록하고 관리할 수 있는 모던 풀스택(Web/Mobile) 애플리케이션입니다.   > React 19, Tailwind CSS v4, daisyUI 5를 활용한 반응형 프론트엔드와 Express 5, MongoDB, Upstash Redis 기반의 안전하고 확장성 있는 백엔드로 구축되었습니다.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "node backend/src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guniluk/webMobile-thinkpad.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/guniluk/webMobile-thinkpad/issues"
+  },
+  "homepage": "https://github.com/guniluk/webMobile-thinkpad#readme"
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router";
 import toast from "react-hot-toast";
 import {
@@ -14,6 +14,7 @@ import {
 import { noteApi } from "../lib/api";
 import { getPaletteForId } from "../lib/colors";
 import DeleteModal from "../components/DeleteModal";
+import RateLimitedUI from "../components/RateLimitedUI";
 
 const NoteDetailPage = () => {
   const { id } = useParams();
@@ -21,6 +22,8 @@ const NoteDetailPage = () => {
 
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isRateLimited, setIsRateLimited] = useState(false);
+  const [rateLimitMessage, setRateLimitMessage] = useState("");
 
   // Edit Mode state
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +35,29 @@ const NoteDetailPage = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const loadNote = useCallback(async () => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      const data = await noteApi.getById(id);
+      setNote(data);
+      setEditTitle(data.title || "");
+      setEditContent(data.content || "");
+      setIsRateLimited(false);
+    } catch (error) {
+      console.error(error);
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+      } else {
+        toast.error(error.message || "노트를 불러오는데 실패했습니다.");
+        navigate("/");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [id, navigate]);
+
   useEffect(() => {
     let isMounted = true;
     if (id) {
@@ -42,15 +68,21 @@ const NoteDetailPage = () => {
             setNote(data);
             setEditTitle(data.title || "");
             setEditContent(data.content || "");
+            setIsRateLimited(false);
             setLoading(false);
           }
         })
         .catch((error) => {
           if (isMounted) {
             console.error(error);
-            toast.error(error.message || "노트를 불러오는데 실패했습니다.");
+            if (error.status === 429 || error.isRateLimited) {
+              setIsRateLimited(true);
+              setRateLimitMessage(error.message);
+            } else {
+              toast.error(error.message || "노트를 불러오는데 실패했습니다.");
+              navigate("/");
+            }
             setLoading(false);
-            navigate("/");
           }
         });
     }
@@ -62,7 +94,7 @@ const NoteDetailPage = () => {
 
   // Handle Save in Edit Mode
   const handleSave = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!editTitle.trim() || !editContent.trim()) {
       toast.error("제목과 내용을 모두 입력해주세요.");
       return;
@@ -79,7 +111,12 @@ const NoteDetailPage = () => {
       toast.success("Think가 성공적으로 수정되었습니다.");
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "수정에 실패했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+      } else {
+        toast.error(error.message || "수정에 실패했습니다.");
+      }
     } finally {
       setIsSaving(false);
     }
@@ -104,13 +141,23 @@ const NoteDetailPage = () => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "삭제에 실패했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+        setDeleteModalOpen(false);
+      } else {
+        toast.error(error.message || "삭제에 실패했습니다.");
+      }
     } finally {
       setIsDeleting(false);
     }
   };
 
   const palette = getPaletteForId(id);
+
+  if (isRateLimited) {
+    return <RateLimitedUI onRetry={loadNote} message={rateLimitMessage} />;
+  }
 
   if (loading) {
     return (

@@ -14,11 +14,14 @@ import { useDebounce } from "../hooks/useDebounce";
 import ThinkCard from "../components/ThinkCard";
 import DeleteModal from "../components/DeleteModal";
 import EditModal from "../components/EditModal";
+import RateLimitedUI from "../components/RateLimitedUI";
 
 const HomePage = () => {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isRateLimited, setIsRateLimited] = useState(false);
+  const [rateLimitMessage, setRateLimitMessage] = useState("");
 
   // Debounced search query
   const debouncedSearchQuery = useDebounce(searchQuery, 350);
@@ -39,9 +42,15 @@ const HomePage = () => {
       setLoading(true);
       const data = await noteApi.getAll();
       setNotes(Array.isArray(data) ? data : []);
+      setIsRateLimited(false);
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "노트 목록을 불러오지 못했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+      } else {
+        toast.error(error.message || "노트 목록을 불러오지 못했습니다.");
+      }
     } finally {
       setLoading(false);
     }
@@ -54,13 +63,19 @@ const HomePage = () => {
       .then((data) => {
         if (isMounted) {
           setNotes(Array.isArray(data) ? data : []);
+          setIsRateLimited(false);
           setLoading(false);
         }
       })
       .catch((error) => {
         if (isMounted) {
           console.error(error);
-          toast.error(error.message || "노트 목록을 불러오지 못했습니다.");
+          if (error.status === 429 || error.isRateLimited) {
+            setIsRateLimited(true);
+            setRateLimitMessage(error.message);
+          } else {
+            toast.error(error.message || "노트 목록을 불러오지 못했습니다.");
+          }
           setLoading(false);
         }
       });
@@ -89,7 +104,13 @@ const HomePage = () => {
       setSelectedNoteForEdit(null);
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "수정에 실패했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+        setEditModalOpen(false);
+      } else {
+        toast.error(error.message || "수정에 실패했습니다.");
+      }
     } finally {
       setIsSaving(false);
     }
@@ -115,7 +136,13 @@ const HomePage = () => {
       setSelectedNoteForDelete(null);
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "삭제에 실패했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+        setDeleteModalOpen(false);
+      } else {
+        toast.error(error.message || "삭제에 실패했습니다.");
+      }
     } finally {
       setIsDeleting(false);
     }
@@ -140,6 +167,10 @@ const HomePage = () => {
   const handleClearSearch = () => {
     setSearchQuery("");
   };
+
+  if (isRateLimited) {
+    return <RateLimitedUI onRetry={loadNotes} message={rateLimitMessage} />;
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-base-100 via-base-200/40 to-base-200/80 py-8 px-4 sm:px-6 lg:px-8">

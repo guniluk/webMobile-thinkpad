@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router";
 import { PlusCircle, Lightbulb } from "lucide-react";
+import ThemeSelector from "./ThemeSelector";
 
 const Header = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const Header = () => {
           </Link>
 
           <div className="flex items-center gap-2">
+            <ThemeSelector />
             {location.pathname !== "/create" && (
               <Link
                 to="/create"

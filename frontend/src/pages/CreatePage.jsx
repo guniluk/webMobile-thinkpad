@@ -3,15 +3,18 @@ import { useNavigate, Link } from "react-router";
 import toast from "react-hot-toast";
 import { ArrowLeft, PlusCircle, Sparkles, X, PenTool } from "lucide-react";
 import { noteApi } from "../lib/api";
+import RateLimitedUI from "../components/RateLimitedUI";
 
 const CreatePage = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRateLimited, setIsRateLimited] = useState(false);
+  const [rateLimitMessage, setRateLimitMessage] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!title.trim() || !content.trim()) {
       toast.error("제목과 내용을 모두 입력해주세요.");
       return;
@@ -27,11 +30,25 @@ const CreatePage = () => {
       navigate("/");
     } catch (error) {
       console.error(error);
-      toast.error(error.message || "생성에 실패했습니다.");
+      if (error.status === 429 || error.isRateLimited) {
+        setIsRateLimited(true);
+        setRateLimitMessage(error.message);
+      } else {
+        toast.error(error.message || "생성에 실패했습니다.");
+      }
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isRateLimited) {
+    return (
+      <RateLimitedUI
+        onRetry={handleSubmit}
+        message={rateLimitMessage}
+      />
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-base-100 via-primary/5 to-base-200/80 py-8 px-4 sm:px-6 lg:px-8">

@@ -6,9 +6,9 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-30 bg-base-100/80 backdrop-blur-md border-b border-base-200 shadow-sm transition-all">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="navbar min-h-16 px-0 justify-between">
+    <header className="sticky top-0 z-30 transition-all border-b shadow-sm bg-base-100/80 backdrop-blur-md border-base-200">
+      <div className="container max-w-6xl px-4 mx-auto">
+        <div className="justify-between px-0 navbar min-h-16">
           <Link
             to="/"
             className="flex items-center gap-2.5 font-bold text-xl md:text-2xl text-primary tracking-tight transition-transform hover:scale-105"
@@ -24,7 +24,7 @@ const Header = () => {
             {location.pathname !== "/create" && (
               <Link
                 to="/create"
-                className="btn btn-primary btn-sm md:btn-md gap-2 rounded-xl shadow-md hover:shadow-lg transition-all"
+                className="gap-2 transition-all shadow-md btn btn-primary btn-sm md:btn-md rounded-xl hover:shadow-lg"
               >
                 <PlusCircle className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="hidden sm:inline">새 Think 작성</span>

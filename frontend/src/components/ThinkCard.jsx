@@ -35,11 +35,9 @@ const ThinkCard = ({ note, onEdit, onDelete }) => {
       className={`card ${palette.bgGradient} border border-base-300/80 shadow-md hover:shadow-xl ${palette.borderHover} hover:-translate-y-1.5 transition-all duration-300 cursor-pointer flex flex-col justify-between group overflow-hidden relative rounded-3xl backdrop-blur-xs`}
     >
       {/* Top subtle decorative accent bar */}
-      <div
-        className={`h-1.5 w-full bg-linear-to-r ${palette.glowColor}`}
-      />
+      <div className={`h-1.5 w-full bg-linear-to-r ${palette.glowColor}`} />
 
-      <div className="card-body p-6 flex-1 flex flex-col">
+      <div className="flex flex-col flex-1 p-6 card-body">
         {/* Date & Action Badges */}
         <div className="flex items-center justify-between text-xs text-base-content/60 mb-2.5">
           <div className="flex items-center gap-1.5 font-medium">
@@ -55,12 +53,12 @@ const ThinkCard = ({ note, onEdit, onDelete }) => {
         </div>
 
         {/* Title */}
-        <h2 className="card-title text-lg md:text-xl font-bold text-base-content line-clamp-1 group-hover:text-primary transition-colors">
+        <h2 className="text-lg font-bold transition-colors card-title md:text-xl text-base-content line-clamp-1 group-hover:text-primary">
           {note.title}
         </h2>
 
         {/* Content Preview */}
-        <p className="text-base-content/75 text-sm mt-2 line-clamp-4 whitespace-pre-wrap leading-relaxed flex-1">
+        <p className="flex-1 mt-2 text-sm leading-relaxed whitespace-pre-wrap text-base-content/75 line-clamp-4">
           {note.content}
         </p>
 
@@ -69,7 +67,7 @@ const ThinkCard = ({ note, onEdit, onDelete }) => {
           <div className="flex items-center gap-1.5">
             <button
               type="button"
-              className="btn btn-ghost btn-xs md:btn-sm btn-circle text-base-content/70 hover:text-primary hover:bg-primary/10 transition-colors"
+              className="transition-colors btn btn-ghost btn-xs md:btn-sm btn-circle text-base-content/70 hover:text-primary hover:bg-primary/10"
               onClick={handleEditClick}
               title="수정하기"
               aria-label="수정하기"
@@ -78,7 +76,7 @@ const ThinkCard = ({ note, onEdit, onDelete }) => {
             </button>
             <button
               type="button"
-              className="btn btn-ghost btn-xs md:btn-sm btn-circle text-base-content/70 hover:text-error hover:bg-error/10 transition-colors"
+              className="transition-colors btn btn-ghost btn-xs md:btn-sm btn-circle text-base-content/70 hover:text-error hover:bg-error/10"
               onClick={handleDeleteClick}
               title="삭제하기"
               aria-label="삭제하기"

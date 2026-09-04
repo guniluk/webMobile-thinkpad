@@ -146,9 +146,9 @@ export default function NoteDetailPage() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-slate-50 justify-center items-center">
+      <SafeAreaView className="items-center justify-center flex-1 bg-slate-50">
         <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="text-xs text-slate-400 font-medium mt-3">
+        <Text className="mt-3 text-xs font-medium text-slate-400">
           Think를 불러오는 중...
         </Text>
       </SafeAreaView>
@@ -180,7 +180,7 @@ export default function NoteDetailPage() {
         className="flex-1"
       >
         {/* Navigation & Action Header */}
-        <View className="flex-row items-center justify-between px-4 py-3 bg-white border-b border-slate-100 shadow-xs">
+        <View className="flex-row items-center justify-between px-4 py-3 bg-white border-b shadow-xs border-slate-100">
           <TouchableOpacity
             onPress={() => router.back()}
             activeOpacity={0.7}
@@ -223,11 +223,11 @@ export default function NoteDetailPage() {
           keyboardShouldPersistTaps="handled"
         >
           {/* Main Card */}
-          <View className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden mb-8">
+          <View className="mb-8 overflow-hidden bg-white border shadow-sm rounded-3xl border-slate-200">
             {/* Top Glowing Color Bar */}
             <View
               style={{ backgroundColor: palette.barColor }}
-              className="h-2 w-full"
+              className="w-full h-2"
             />
 
             {isEditing ? (
@@ -242,7 +242,7 @@ export default function NoteDetailPage() {
                     onChangeText={setEditTitle}
                     placeholder="제목을 입력하세요"
                     placeholderTextColor="#94a3b8"
-                    className="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-base text-slate-900 font-semibold focus:border-indigo-500 focus:bg-white"
+                    className="px-4 py-3 text-base font-semibold border bg-slate-50 border-slate-200 rounded-2xl text-slate-900 focus:border-indigo-500 focus:bg-white"
                     editable={!isSaving}
                     autoFocus
                   />
@@ -313,7 +313,7 @@ export default function NoteDetailPage() {
                       backgroundColor: palette.badgeBg,
                       borderColor: palette.badgeBorder,
                     }}
-                    className="flex-row items-center gap-1 px-3 py-1 rounded-full border"
+                    className="flex-row items-center gap-1 px-3 py-1 border rounded-full"
                   >
                     <Sparkles size={12} color={palette.badgeText} />
                     <Text
@@ -326,7 +326,7 @@ export default function NoteDetailPage() {
 
                   <View className="flex-row items-center gap-1.5">
                     <Calendar size={13} color="#64748b" />
-                    <Text className="text-xs text-slate-500 font-medium">
+                    <Text className="text-xs font-medium text-slate-500">
                       {formattedCreated}
                     </Text>
                   </View>
@@ -343,13 +343,13 @@ export default function NoteDetailPage() {
                 )}
 
                 {/* Title */}
-                <Text className="text-2xl font-black text-slate-900 tracking-tight leading-snug mb-4">
+                <Text className="mb-4 text-2xl font-black leading-snug tracking-tight text-slate-900">
                   {note.title}
                 </Text>
 
                 {/* Content Box */}
                 <View className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100 min-h-[160px]">
-                  <Text className="text-base text-slate-800 leading-relaxed">
+                  <Text className="text-base leading-relaxed text-slate-800">
                     {note.content}
                   </Text>
                 </View>

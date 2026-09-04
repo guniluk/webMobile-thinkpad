@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import {
@@ -46,35 +46,35 @@ export default function RateLimitedUI({
 
   const progressPercent = Math.min(
     100,
-    Math.max(0, ((autoRetrySeconds - timeLeft) / autoRetrySeconds) * 100)
+    Math.max(0, ((autoRetrySeconds - timeLeft) / autoRetrySeconds) * 100),
   );
 
   return (
-    <View className="flex-1 justify-center items-center px-6 py-10 bg-slate-50">
-      <View className="w-full max-w-sm bg-white rounded-3xl p-6 border border-amber-200 shadow-xl items-center">
+    <View className="items-center justify-center flex-1 px-6 py-10 bg-slate-50">
+      <View className="items-center w-full max-w-sm p-6 bg-white border shadow-xl rounded-3xl border-amber-200">
         {/* Animated Badge */}
-        <View className="w-20 h-20 rounded-3xl bg-amber-50 items-center justify-center border border-amber-200 mb-4 shadow-inner">
+        <View className="items-center justify-center w-20 h-20 mb-4 border shadow-inner rounded-3xl bg-amber-50 border-amber-200">
           <ShieldAlert size={40} color="#d97706" />
         </View>
 
-        <View className="flex-row items-center gap-1 bg-amber-100/80 px-3 py-1 rounded-full mb-3">
+        <View className="flex-row items-center gap-1 px-3 py-1 mb-3 rounded-full bg-amber-100/80">
           <AlertCircle size={14} color="#b45309" />
           <Text className="text-[11px] font-bold text-amber-800 tracking-wider uppercase">
             429 Too Many Requests
           </Text>
         </View>
 
-        <Text className="text-xl font-black text-slate-900 text-center tracking-tight mb-2">
+        <Text className="mb-2 text-xl font-black tracking-tight text-center text-slate-900">
           요청 한도 초과
         </Text>
 
-        <Text className="text-xs text-slate-600 text-center leading-relaxed mb-6">
+        <Text className="mb-6 text-xs leading-relaxed text-center text-slate-600">
           {message ||
             "단시간에 너무 많은 요청이 발생하여 서버 보호를 위해 일시적으로 접근이 제한되었습니다."}
         </Text>
 
         {/* Progress & Countdown */}
-        <View className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6">
+        <View className="w-full p-4 mb-6 border bg-slate-50 border-slate-200 rounded-2xl">
           <View className="flex-row items-center justify-between mb-2">
             <View className="flex-row items-center gap-1.5">
               <Clock size={14} color="#d97706" />
@@ -91,7 +91,7 @@ export default function RateLimitedUI({
           <View className="h-2 w-full bg-slate-200 rounded-full overflow-hidden mb-2.5">
             <View
               style={{ width: `${progressPercent}%` }}
-              className="h-full bg-amber-500 rounded-full"
+              className="h-full rounded-full bg-amber-500"
             />
           </View>
 

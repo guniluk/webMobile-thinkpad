@@ -174,15 +174,15 @@ const HomePage = () => {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-base-100 via-base-200/40 to-base-200/80 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container max-w-6xl mx-auto">
         {/* Top Hero & Control Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col justify-between gap-4 mb-8 md:flex-row md:items-center">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-base-content flex items-center gap-2.5">
               <span>내 생각 카드</span>
               <Sparkles className="w-6 h-6 text-warning" />
             </h1>
-            <p className="text-sm sm:text-base text-base-content/70 mt-1">
+            <p className="mt-1 text-sm sm:text-base text-base-content/70">
               떠오르는 아이디어와 중요한 생각들을 기록하고 관리하세요.
             </p>
           </div>
@@ -190,13 +190,13 @@ const HomePage = () => {
           <div className="flex items-center gap-2.5">
             {/* Search Input with Debounce */}
             <div className="relative flex-1 md:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/50" />
+              <Search className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-base-content/50" />
               <input
                 type="text"
                 placeholder="Think 검색 (2자 이상)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="input input-bordered input-sm sm:input-md w-full pl-9 pr-8 rounded-xl focus:input-primary"
+                className="w-full pr-8 input input-bordered input-sm sm:input-md pl-9 rounded-xl focus:input-primary"
               />
               {searchQuery && (
                 <button
@@ -224,20 +224,11 @@ const HomePage = () => {
                 }`}
               />
             </button>
-
-            {/* Create Button */}
-            <Link
-              to="/create"
-              className="btn btn-primary btn-sm sm:btn-md gap-1.5 rounded-xl shadow-md"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">새 Think</span>
-            </Link>
           </div>
         </div>
 
         {/* Notes Count & Filter info */}
-        <div className="flex items-center justify-between text-xs sm:text-sm text-base-content/60 mb-4 px-1">
+        <div className="flex items-center justify-between px-1 mb-4 text-xs sm:text-sm text-base-content/60">
           <div className="flex items-center gap-2">
             <span>
               총{" "}
@@ -245,7 +236,7 @@ const HomePage = () => {
               개의 Think
             </span>
             {effectiveQuery && (
-              <span className="badge badge-sm badge-primary badge-outline gap-1">
+              <span className="gap-1 badge badge-sm badge-primary badge-outline">
                 &ldquo;{effectiveQuery}&rdquo; 검색 결과
                 <button
                   onClick={handleClearSearch}
@@ -267,38 +258,38 @@ const HomePage = () => {
         {/* Content Area */}
         {loading ? (
           /* Loading Skeletons */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((idx) => (
               <div
                 key={idx}
-                className="card bg-base-100 p-6 border border-base-200 shadow-xs space-y-4 animate-pulse rounded-2xl"
+                className="p-6 space-y-4 border shadow-xs card bg-base-100 border-base-200 animate-pulse rounded-2xl"
               >
-                <div className="h-4 bg-base-300 rounded-md w-1/3" />
-                <div className="h-6 bg-base-300 rounded-md w-3/4" />
+                <div className="w-1/3 h-4 rounded-md bg-base-300" />
+                <div className="w-3/4 h-6 rounded-md bg-base-300" />
                 <div className="space-y-2">
                   <div className="h-3.5 bg-base-300 rounded-md w-full" />
                   <div className="h-3.5 bg-base-300 rounded-md w-5/6" />
                   <div className="h-3.5 bg-base-300 rounded-md w-2/3" />
                 </div>
-                <div className="flex justify-between items-center pt-4">
-                  <div className="h-8 bg-base-300 rounded-full w-16" />
-                  <div className="h-4 bg-base-300 rounded-md w-20" />
+                <div className="flex items-center justify-between pt-4">
+                  <div className="w-16 h-8 rounded-full bg-base-300" />
+                  <div className="w-20 h-4 rounded-md bg-base-300" />
                 </div>
               </div>
             ))}
           </div>
         ) : filteredNotes.length === 0 ? (
           /* Empty State */
-          <div className="card bg-base-100 border border-base-200 shadow-sm text-center py-16 px-6 rounded-3xl max-w-md mx-auto my-12">
-            <div className="mx-auto w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-4">
+          <div className="max-w-md px-6 py-16 mx-auto my-12 text-center border shadow-sm card bg-base-100 border-base-200 rounded-3xl">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-2xl text-primary">
               <BookOpen className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold text-base-content mb-2">
+            <h3 className="mb-2 text-xl font-bold text-base-content">
               {effectiveQuery
                 ? "검색 결과가 없습니다"
                 : "작성된 Think가 없습니다"}
             </h3>
-            <p className="text-sm text-base-content/60 mb-6">
+            <p className="mb-6 text-sm text-base-content/60">
               {effectiveQuery
                 ? `"${effectiveQuery}"에 해당하는 Think를 찾지 못했습니다.`
                 : "첫 번째 생각을 기록하고 아이디어를 펼쳐보세요!"}
@@ -306,14 +297,14 @@ const HomePage = () => {
             {effectiveQuery ? (
               <button
                 onClick={handleClearSearch}
-                className="btn btn-outline btn-sm mx-auto rounded-xl"
+                className="mx-auto btn btn-outline btn-sm rounded-xl"
               >
                 전체 목록 보기
               </button>
             ) : (
               <Link
                 to="/create"
-                className="btn btn-primary gap-2 mx-auto rounded-xl shadow-md hover:shadow-lg"
+                className="gap-2 mx-auto shadow-md btn btn-primary rounded-xl hover:shadow-lg"
               >
                 <PlusCircle className="w-4 h-4" />첫 Think 작성하기
               </Link>
@@ -321,7 +312,7 @@ const HomePage = () => {
           </div>
         ) : (
           /* Notes Grid */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredNotes.map((note) => (
               <ThinkCard
                 key={note._id}

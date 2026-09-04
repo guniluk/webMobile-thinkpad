@@ -23,38 +23,38 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, noteTitle, isDeleting }) => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="delete-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget && !isDeleting) onClose();
       }}
     >
-      <div className="card bg-base-100 w-full max-w-md shadow-2xl border border-base-200 animate-scale-up">
-        <div className="card-body p-6">
-          <div className="flex items-center gap-3 text-error mb-2">
-            <div className="p-3 bg-error/10 rounded-full">
+      <div className="w-full max-w-md border shadow-2xl card bg-base-100 border-base-200 animate-scale-up">
+        <div className="p-6 card-body">
+          <div className="flex items-center gap-3 mb-2 text-error">
+            <div className="p-3 rounded-full bg-error/10">
               <AlertTriangle className="w-6 h-6 text-error" />
             </div>
             <h3
               id="delete-modal-title"
-              className="card-title text-lg font-bold text-base-content"
+              className="text-lg font-bold card-title text-base-content"
             >
               Think 삭제 확인
             </h3>
           </div>
 
-          <div className="text-base-content/80 text-sm py-2">
+          <div className="py-2 text-sm text-base-content/80">
             <p>정말로 이 Think를 삭제하시겠습니까?</p>
             {noteTitle && (
               <span className="block font-semibold text-base-content mt-1.5 truncate bg-base-200 p-2.5 rounded-lg border border-base-300">
                 &ldquo;{noteTitle}&rdquo;
               </span>
             )}
-            <span className="block text-xs text-error/80 mt-2">
+            <span className="block mt-2 text-xs text-error/80">
               삭제된 데이터는 영구적으로 제거되며 복구할 수 없습니다.
             </span>
           </div>
 
-          <div className="card-actions justify-end gap-2 mt-4">
+          <div className="justify-end gap-2 mt-4 card-actions">
             <button
               type="button"
               className="btn btn-ghost btn-sm md:btn-md"
@@ -65,7 +65,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, noteTitle, isDeleting }) => {
             </button>
             <button
               type="button"
-              className="btn btn-error btn-sm md:btn-md gap-2"
+              className="gap-2 btn btn-error btn-sm md:btn-md"
               onClick={onConfirm}
               disabled={isDeleting}
             >

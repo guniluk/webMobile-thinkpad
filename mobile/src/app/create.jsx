@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -73,7 +73,7 @@ export default function CreatePage() {
         className="flex-1"
       >
         {/* Navigation Bar */}
-        <View className="flex-row items-center justify-between px-4 py-3 bg-white border-b border-slate-100 shadow-xs">
+        <View className="flex-row items-center justify-between px-4 py-3 bg-white border-b shadow-xs border-slate-100">
           <TouchableOpacity
             onPress={() => router.back()}
             activeOpacity={0.7}
@@ -96,10 +96,10 @@ export default function CreatePage() {
           keyboardShouldPersistTaps="handled"
         >
           {/* Card Form */}
-          <View className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm mb-6">
+          <View className="p-5 mb-6 bg-white border shadow-sm rounded-3xl border-slate-200">
             {/* Header with Icon & Sparkles */}
             <View className="flex-row items-center gap-3 pb-4 mb-4 border-b border-slate-100">
-              <View className="w-11 h-11 rounded-2xl bg-indigo-50 items-center justify-center border border-indigo-100">
+              <View className="items-center justify-center border border-indigo-100 w-11 h-11 rounded-2xl bg-indigo-50">
                 <PenTool size={20} color="#4f46e5" />
               </View>
               <View className="flex-1">
@@ -130,7 +130,7 @@ export default function CreatePage() {
                 onChangeText={setTitle}
                 placeholder="제목을 입력하세요"
                 placeholderTextColor="#94a3b8"
-                className="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-base text-slate-900 font-semibold focus:border-indigo-500 focus:bg-white"
+                className="px-4 py-3 text-base font-semibold border bg-slate-50 border-slate-200 rounded-2xl text-slate-900 focus:border-indigo-500 focus:bg-white"
                 editable={!isSubmitting}
                 autoFocus
               />

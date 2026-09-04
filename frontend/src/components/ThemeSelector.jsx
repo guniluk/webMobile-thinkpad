@@ -33,9 +33,9 @@ const ThemeSelector = () => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content menu bg-base-200 rounded-box z-50 w-44 p-2 shadow-lg border border-base-300 mt-2 space-y-1"
+        className="z-50 p-2 mt-2 space-y-1 border shadow-lg dropdown-content menu bg-base-200 rounded-box w-44 border-base-300"
       >
-        <li className="menu-title px-2 py-1 text-xs font-bold uppercase tracking-wider text-base-content/60">
+        <li className="px-2 py-1 text-xs font-bold tracking-wider uppercase menu-title text-base-content/60">
           Theme
         </li>
         {THEMES.map((t) => {

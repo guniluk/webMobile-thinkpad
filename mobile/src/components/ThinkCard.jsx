@@ -30,7 +30,7 @@ export default function ThinkCard({ note, onEdit, onDelete }) {
     <TouchableOpacity
       activeOpacity={0.88}
       onPress={handleCardPress}
-      className="bg-white rounded-2xl mb-4 border border-slate-200/80 shadow-sm overflow-hidden"
+      className="mb-4 overflow-hidden bg-white border shadow-sm rounded-2xl border-slate-200/80"
     >
       {/* Top Accent Color Bar */}
       <View
@@ -68,7 +68,7 @@ export default function ThinkCard({ note, onEdit, onDelete }) {
         {/* Title */}
         <Text
           numberOfLines={1}
-          className="text-lg font-bold text-slate-900 tracking-tight mb-1.5"
+          className="text-lg font-bold text-blue-800 tracking-tight mb-1.5"
         >
           {note.title}
         </Text>
@@ -76,7 +76,7 @@ export default function ThinkCard({ note, onEdit, onDelete }) {
         {/* Content snippet */}
         <Text
           numberOfLines={3}
-          className="text-sm text-slate-600 leading-relaxed mb-4"
+          className="mb-4 text-sm leading-relaxed text-slate-600"
         >
           {note.content}
         </Text>
@@ -91,7 +91,7 @@ export default function ThinkCard({ note, onEdit, onDelete }) {
                 onEdit(note);
               }}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              className="p-2 rounded-xl bg-slate-50 border border-slate-100 mr-1"
+              className="p-2 mr-1 border rounded-xl bg-slate-50 border-slate-100"
             >
               <Edit3 size={15} color="#475569" />
             </TouchableOpacity>
@@ -103,7 +103,7 @@ export default function ThinkCard({ note, onEdit, onDelete }) {
                 onDelete(note);
               }}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              className="p-2 rounded-xl bg-red-50 border border-red-100"
+              className="p-2 border border-red-100 rounded-xl bg-red-50"
             >
               <Trash2 size={15} color="#ef4444" />
             </TouchableOpacity>

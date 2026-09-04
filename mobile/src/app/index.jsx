@@ -179,7 +179,7 @@ export default function HomePage() {
               onChangeText={setSearchQuery}
               placeholder="Think 검색 (2자 이상)..."
               placeholderTextColor="#94a3b8"
-              className="flex-1 ml-2 text-sm text-slate-800 font-medium p-0"
+              className="flex-1 p-0 ml-2 text-sm font-medium text-slate-800"
               returnKeyType="search"
             />
             {searchQuery.length > 0 && (
@@ -196,7 +196,7 @@ export default function HomePage() {
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => loadNotes(false)}
-            className="w-11 h-11 bg-white border border-slate-200 rounded-2xl items-center justify-center shadow-xs"
+            className="items-center justify-center bg-white border shadow-xs w-11 h-11 border-slate-200 rounded-2xl"
           >
             <RotateCw
               size={18}
@@ -207,11 +207,11 @@ export default function HomePage() {
         </View>
 
         {/* Count & Query Status */}
-        <View className="flex-row items-center justify-between mb-3 px-1">
+        <View className="flex-row items-center justify-between px-1 mb-3">
           <View className="flex-row items-center gap-1.5">
-            <Text className="text-xs text-slate-500 font-semibold">
+            <Text className="text-xs font-semibold text-slate-500">
               총{" "}
-              <Text className="text-indigo-600 font-bold">
+              <Text className="font-bold text-indigo-600">
                 {filteredNotes.length}
               </Text>
               개의 Think
@@ -234,25 +234,25 @@ export default function HomePage() {
 
         {/* Main List / Loading / Empty */}
         {loading && !refreshing ? (
-          <View className="flex-1 justify-center items-center py-20">
+          <View className="items-center justify-center flex-1 py-20">
             <ActivityIndicator size="large" color="#4f46e5" />
-            <Text className="text-xs text-slate-400 font-medium mt-3">
+            <Text className="mt-3 text-xs font-medium text-slate-400">
               Think 목록을 불러오는 중...
             </Text>
           </View>
         ) : filteredNotes.length === 0 ? (
-          <View className="flex-1 justify-center items-center py-16 px-6">
-            <View className="w-16 h-16 rounded-3xl bg-indigo-50 items-center justify-center border border-indigo-100 mb-4">
+          <View className="items-center justify-center flex-1 px-6 py-16">
+            <View className="items-center justify-center w-16 h-16 mb-4 border border-indigo-100 rounded-3xl bg-indigo-50">
               <BookOpen size={28} color="#4f46e5" />
             </View>
 
-            <Text className="text-base font-bold text-slate-800 mb-1">
+            <Text className="mb-1 text-base font-bold text-slate-800">
               {effectiveQuery
                 ? "검색 결과가 없습니다"
                 : "작성된 Think가 없습니다"}
             </Text>
 
-            <Text className="text-xs text-slate-500 text-center leading-relaxed mb-6">
+            <Text className="mb-6 text-xs leading-relaxed text-center text-slate-500">
               {effectiveQuery
                 ? `"${effectiveQuery}"에 해당하는 Think를 찾지 못했습니다.`
                 : "첫 번째 생각을 기록하고 아이디어를 펼쳐보세요!"}
@@ -271,7 +271,7 @@ export default function HomePage() {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => router.push("/create")}
-                className="flex-row items-center gap-2 px-5 py-3 rounded-2xl bg-indigo-600 shadow-md shadow-indigo-200"
+                className="flex-row items-center gap-2 px-5 py-3 bg-indigo-600 shadow-md rounded-2xl shadow-indigo-200"
               >
                 <Plus size={16} color="#ffffff" strokeWidth={2.5} />
                 <Text className="text-sm font-bold text-white">
@@ -309,7 +309,7 @@ export default function HomePage() {
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => router.push("/create")}
-        className="absolute bottom-6 right-6 w-14 h-14 rounded-full bg-indigo-600 items-center justify-center shadow-lg shadow-indigo-300 border-2 border-white active:scale-95"
+        className="absolute items-center justify-center bg-indigo-600 border-2 border-white rounded-full shadow-lg bottom-6 right-6 w-14 h-14 shadow-indigo-300 active:scale-95"
       >
         <Plus size={26} color="#ffffff" strokeWidth={2.5} />
       </TouchableOpacity>

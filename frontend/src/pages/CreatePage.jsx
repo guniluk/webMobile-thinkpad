@@ -29,7 +29,6 @@ const CreatePage = () => {
       toast.success("새 Think가 성공적으로 등록되었습니다.");
       navigate("/");
     } catch (error) {
-      console.error(error);
       if (error.status === 429 || error.isRateLimited) {
         setIsRateLimited(true);
         setRateLimitMessage(error.message);
@@ -42,22 +41,17 @@ const CreatePage = () => {
   };
 
   if (isRateLimited) {
-    return (
-      <RateLimitedUI
-        onRetry={handleSubmit}
-        message={rateLimitMessage}
-      />
-    );
+    return <RateLimitedUI onRetry={handleSubmit} message={rateLimitMessage} />;
   }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-linear-to-b from-base-100 via-primary/5 to-base-200/80 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto max-w-3xl">
+      <div className="container max-w-3xl mx-auto">
         {/* Navigation */}
         <div className="mb-6">
           <Link
             to="/"
-            className="btn btn-ghost btn-sm sm:btn-md gap-2 rounded-2xl text-base-content/75 hover:text-base-content hover:bg-base-200"
+            className="gap-2 btn btn-ghost btn-sm sm:btn-md rounded-2xl text-base-content/75 hover:text-base-content hover:bg-base-200"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>목록으로 돌아가기</span>
@@ -65,22 +59,25 @@ const CreatePage = () => {
         </div>
 
         {/* Form Card with stylish gradient & glow */}
-        <div className="card bg-linear-to-br from-base-100 via-primary/5 to-secondary/5 border border-primary/20 shadow-2xl rounded-3xl overflow-hidden backdrop-blur-md">
+        <div className="overflow-hidden border shadow-2xl card bg-linear-to-br from-base-100 via-primary/5 to-secondary/5 border-primary/20 rounded-3xl backdrop-blur-md">
           {/* Top Decorative Gradient Line */}
-          <div className="h-2 w-full bg-linear-to-r from-primary via-secondary to-accent" />
+          <div className="w-full h-2 bg-linear-to-r from-primary via-secondary to-accent" />
 
-          <form onSubmit={handleSubmit} className="card-body p-6 sm:p-10 space-y-6">
+          <form
+            onSubmit={handleSubmit}
+            className="p-6 space-y-6 card-body sm:p-10"
+          >
             {/* Header */}
             <div className="flex items-center gap-3.5 pb-5 border-b border-base-200/80">
-              <div className="p-3 bg-primary/10 text-primary rounded-2xl shadow-inner">
+              <div className="p-3 shadow-inner bg-primary/10 text-primary rounded-2xl">
                 <PenTool className="w-6 h-6" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-extrabold text-base-content tracking-tight">
+                  <h1 className="text-xl font-extrabold tracking-tight sm:text-2xl text-base-content">
                     새 Think 작성
                   </h1>
-                  <span className="badge badge-primary badge-sm font-semibold gap-1">
+                  <span className="gap-1 font-semibold badge badge-primary badge-sm">
                     <Sparkles className="w-2.5 h-2.5" /> New
                   </span>
                 </div>
@@ -92,7 +89,7 @@ const CreatePage = () => {
 
             {/* Title Input */}
             <div>
-              <label className="label font-bold text-base-content text-sm sm:text-base">
+              <label className="text-sm font-bold label text-base-content sm:text-base">
                 제목
               </label>
               <input
@@ -100,7 +97,7 @@ const CreatePage = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="제목을 입력하세요"
-                className="input input-bordered input-primary w-full text-base sm:text-lg font-medium rounded-2xl bg-base-100/80 shadow-xs focus:ring-2 focus:ring-primary/20"
+                className="w-full text-base font-medium shadow-xs input input-bordered input-primary sm:text-lg rounded-2xl bg-base-100/80 focus:ring-2 focus:ring-primary/20"
                 required
                 disabled={isSubmitting}
                 autoFocus
@@ -109,21 +106,21 @@ const CreatePage = () => {
 
             {/* Content Textarea */}
             <div>
-              <label className="label font-bold text-base-content text-sm sm:text-base">
+              <label className="text-sm font-bold label text-base-content sm:text-base">
                 내용
               </label>
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="어떤 생각을 기록하고 싶으신가요? 내용을 작성해보세요..."
-                className="textarea textarea-bordered textarea-primary w-full h-64 text-base leading-relaxed rounded-2xl bg-base-100/80 shadow-xs resize-y focus:ring-2 focus:ring-primary/20"
+                className="w-full h-64 text-base leading-relaxed shadow-xs resize-y textarea textarea-bordered textarea-primary rounded-2xl bg-base-100/80 focus:ring-2 focus:ring-primary/20"
                 required
                 disabled={isSubmitting}
               />
             </div>
 
             {/* Action Buttons */}
-            <div className="card-actions justify-end gap-3 pt-5 border-t border-base-200/80">
+            <div className="justify-end gap-3 pt-5 border-t card-actions border-base-200/80">
               <button
                 type="button"
                 className="btn btn-ghost btn-sm sm:btn-md gap-1.5 rounded-xl"
@@ -135,7 +132,7 @@ const CreatePage = () => {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary btn-sm sm:btn-md gap-2 rounded-xl shadow-md hover:shadow-lg"
+                className="gap-2 shadow-md btn btn-primary btn-sm sm:btn-md rounded-xl hover:shadow-lg"
                 disabled={isSubmitting || !title.trim() || !content.trim()}
               >
                 {isSubmitting ? (
